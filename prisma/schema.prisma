@@ -7,13 +7,85 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String @id @default(cuid())
-  firstName String
-  lastName  String
-  email     String @unique
-  password  String
+model Halls {
+  id          Int          @id @default(autoincrement())
+  hallName    String
+  hallAddress hallAddress?
+  screen      Screens[]
+  Movies      Movie[]
+  showTime    ShowTime[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model hallAddress {
+  id         Int     @id @default(autoincrement())
+  street     String?
+  city       String?
+  state      String?
+  postalCode String?
+  country    String?
+  hallId     String?
+  hall       Halls?  @relation(fields: [id], references: [id])
+
+  @@unique([id])
+}
+
+model ShowTime {
+  id Int @id @default(autoincrement())
+
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
+
+  hallId Int
+  hall   Halls @relation(fields: [hallId], references: [id])
+
+  screenId Int
+  screen   Screens @relation(fields: [screenId], references: [id])
+
+  showTime DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Screens {
+  id           Int        @id @default(autoincrement())
+  screenNumber Int
+  capacity     Int
+  hallId       Int
+  hall         Halls      @relation(fields: [hallId], references: [id])
+  Movies       Movie[]
+  Seats        Seat[]
+  ShowTime     ShowTime[]
+}
+
+model Seat {
+  id         Int     @id @default(autoincrement())
+  seatNumber Int     @unique
+  available  Boolean
+
+  screenId Int
+  screen   Screens @relation(fields: [screenId], references: [id])
+}
+
+model Movie {
+  id          Int      @id @default(autoincrement())
+  movieName   String
+  Description String
+  Duration    Int
+  Rating      Float
+  Image       String
+  Genre       String
+  ReleaseDate DateTime
+  screenId    Int
+  screen      Screens  @relation(fields: [screenId], references: [id])
+
+  hallId Int
+  hall   Halls @relation(fields: [hallId], references: [id])
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  ShowTime  ShowTime[]
 }
