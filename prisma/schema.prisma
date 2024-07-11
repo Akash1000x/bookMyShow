@@ -14,10 +14,10 @@ model Halls {
   screen      Screens[]
   Movies      Movie[]
   showTime    ShowTime[]
+  Booking     Booking[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Booking   Booking[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model hallAddress {
@@ -46,10 +46,10 @@ model ShowTime {
   screen   Screens @relation(fields: [screenId], references: [id])
 
   showTime DateTime
+  Booking  Booking[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Booking   Booking[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Screens {
@@ -70,8 +70,9 @@ model Seat {
   available  Boolean
 
   screenId Int
-  screen   Screens   @relation(fields: [screenId], references: [id])
-  Booking  Booking[]
+  screen   Screens @relation(fields: [screenId], references: [id])
+
+  Booking Booking[]
 }
 
 model Movie {
@@ -89,24 +90,25 @@ model Movie {
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  ShowTime  ShowTime[]
-  Booking   Booking[]
+  ShowTime ShowTime[]
+  Booking  Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model User {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   firstName   String
   lastName    String?
-  email       String?  @unique
-  phoneNumber String   @unique
+  email       String?   @unique
+  phoneNumber String    @unique
   password    String
   Address     Address?
+  Booking     Booking[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Booking   Booking[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Address {
