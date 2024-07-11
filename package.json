@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "npx prisma db seed"
+    "db:seed": "npx prisma db seed",
+    "db:migrate": "npx prisma migrate dev --skip-seed"
   },
   "dependencies": {
     "@prisma/client": "^5.16.2",
