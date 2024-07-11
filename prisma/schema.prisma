@@ -15,8 +15,9 @@ model Halls {
   Movies      Movie[]
   showTime    ShowTime[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Booking   Booking[]
 }
 
 model hallAddress {
@@ -46,8 +47,9 @@ model ShowTime {
 
   showTime DateTime
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Booking   Booking[]
 }
 
 model Screens {
@@ -59,6 +61,7 @@ model Screens {
   Movies       Movie[]
   Seats        Seat[]
   ShowTime     ShowTime[]
+  Booking      Booking[]
 }
 
 model Seat {
@@ -67,7 +70,8 @@ model Seat {
   available  Boolean
 
   screenId Int
-  screen   Screens @relation(fields: [screenId], references: [id])
+  screen   Screens   @relation(fields: [screenId], references: [id])
+  Booking  Booking[]
 }
 
 model Movie {
@@ -88,6 +92,7 @@ model Movie {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   ShowTime  ShowTime[]
+  Booking   Booking[]
 }
 
 model User {
@@ -99,8 +104,9 @@ model User {
   password    String
   Address     Address?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Booking   Booking[]
 }
 
 model Address {
@@ -114,4 +120,29 @@ model Address {
   user       User?   @relation(fields: [UserId], references: [id])
 
   @@unique([UserId])
+}
+
+model Booking {
+  id Int @id @default(autoincrement())
+
+  hallId Int
+  hall   Halls @relation(fields: [hallId], references: [id])
+
+  screenId Int
+  Screen   Screens @relation(fields: [screenId], references: [id])
+
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
+
+  showTimeId Int
+  showTime   ShowTime @relation(fields: [showTimeId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  seatId Int
+  seat   Seat @relation(fields: [seatId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
