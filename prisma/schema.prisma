@@ -11,10 +11,10 @@ model Halls {
   id          Int          @id @default(autoincrement())
   hallName    String
   hallAddress hallAddress?
-  screen      Screens[]
+  capacity    Int
   Movies      Movie[]
-  showTime    ShowTime[]
   Booking     Booking[]
+  seats       Seat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -27,50 +27,17 @@ model hallAddress {
   state      String?
   postalCode String?
   country    String?
-  hallId     String?
-  hall       Halls?  @relation(fields: [id], references: [id])
-
-  @@unique([id])
-}
-
-model ShowTime {
-  id Int @id @default(autoincrement())
-
-  movieId Int
-  movie   Movie @relation(fields: [movieId], references: [id])
-
-  hallId Int
-  hall   Halls @relation(fields: [hallId], references: [id])
-
-  screenId Int
-  screen   Screens @relation(fields: [screenId], references: [id])
-
-  showTime DateTime
-  Booking  Booking[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Screens {
-  id           Int        @id @default(autoincrement())
-  screenNumber Int
-  capacity     Int
-  hallId       Int
-  hall         Halls      @relation(fields: [hallId], references: [id])
-  Movies       Movie[]
-  Seats        Seat[]
-  ShowTime     ShowTime[]
-  Booking      Booking[]
+  hallId     Int     @unique
+  hall       Halls?  @relation(fields: [hallId], references: [id])
 }
 
 model Seat {
   id         Int     @id @default(autoincrement())
   seatNumber Int     @unique
-  available  Boolean
+  available  Boolean @default(true)
 
-  screenId Int
-  screen   Screens @relation(fields: [screenId], references: [id])
+  hallId Int
+  hall   Halls @relation(fields: [hallId], references: [id])
 
   Booking Booking[]
 }
@@ -78,20 +45,14 @@ model Seat {
 model Movie {
   id          Int      @id @default(autoincrement())
   movieName   String
-  Description String
+  //TODO: change the uppercase to lowercase
   Duration    Int
-  Rating      Float
-  Image       String
-  Genre       String
   ReleaseDate DateTime
-  screenId    Int
-  screen      Screens  @relation(fields: [screenId], references: [id])
 
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
 
-  ShowTime ShowTime[]
-  Booking  Booking[]
+  Booking Booking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -118,10 +79,8 @@ model Address {
   state      String?
   postalCode String?
   country    String?
-  UserId     String?
-  user       User?   @relation(fields: [UserId], references: [id])
-
-  @@unique([UserId])
+  userId     String  @unique
+  user       User?   @relation(fields: [userId], references: [id])
 }
 
 model Booking {
@@ -130,20 +89,14 @@ model Booking {
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
 
-  screenId Int
-  Screen   Screens @relation(fields: [screenId], references: [id])
-
   movieId Int
   movie   Movie @relation(fields: [movieId], references: [id])
-
-  showTimeId Int
-  showTime   ShowTime @relation(fields: [showTimeId], references: [id])
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  seatId Int
-  seat   Seat @relation(fields: [seatId], references: [id])
+  seatNumber Int  @unique
+  seat       Seat @relation(fields: [seatNumber], references: [seatNumber])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
