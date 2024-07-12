@@ -33,21 +33,22 @@ model hallAddress {
 
 model Seat {
   id         Int     @id @default(autoincrement())
-  seatNumber Int     @unique
+  seatNumber Int
   available  Boolean @default(true)
 
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
 
-  Booking Booking[]
+  Booking Booking?
+
+  @@unique([seatNumber, hallId])
 }
 
 model Movie {
   id          Int      @id @default(autoincrement())
   movieName   String
-  //TODO: change the uppercase to lowercase
-  Duration    Int
-  ReleaseDate DateTime
+  duration    Int
+  releaseDate DateTime
 
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
@@ -95,9 +96,12 @@ model Booking {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  seatNumber Int  @unique
-  seat       Seat @relation(fields: [seatNumber], references: [seatNumber])
+  seatNumber Int
+  seatHallId Int
+  seat       Seat @relation(fields: [seatNumber, seatHallId], references: [seatNumber, hallId])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([seatNumber, seatHallId])
 }
