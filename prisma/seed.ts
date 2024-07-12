@@ -1,33 +1,26 @@
 import db from "../src/db";
+import { hallsData } from "./data";
 
 async function AddHalls() {
-  await db.halls.create({
-    data: {
-      hallName: "Miraj",
-      capacity: 100,
-      hallAddress: {
-        create: {
-          city: "Mumbai",
-          state: "Maharashtra",
-          country: "India",
-          postalCode: "400001",
-          street: "Mumbai Central",
-        },
+  for (const hallData of hallsData) {
+    const hall = await db.halls.create({
+      data: {
+        hallName: hallData.hallName,
+        capacity: hallData.capacity,
       },
-      Movies: {
-        create: {
-          movieName: "Deadpool 3",
-          Duration: 180,
-          ReleaseDate: new Date("2025-07-25"),
-        },
+    });
+
+    await db.hallAddress.create({
+      data: {
+        ...hallData.address,
+        hallId: hall.id,
       },
-      seats: {
-        createMany: {
-          data: Array.from({ length: 100 }, (_, i) => ({ seatNumber: i + 1 })),
-        },
-      },
-    },
-  });
+    });
+
+    await db.seat.createMany({
+      data: Array.from({ length: hallData.capacity }, (_, i) => ({ seatNumber: i + 1, hallId: hall.id })),
+    });
+  }
 }
 
 AddHalls()
