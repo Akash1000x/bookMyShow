@@ -1,7 +1,8 @@
 import db from "../src/db";
-import { hallsData } from "./data";
+import { hallsData, movies } from "./data";
 
 async function AddHalls() {
+  const hallIds = [];
   for (const hallData of hallsData) {
     const hall = await db.halls.create({
       data: {
@@ -20,11 +21,34 @@ async function AddHalls() {
     await db.seat.createMany({
       data: Array.from({ length: hallData.capacity }, (_, i) => ({ seatNumber: i + 1, hallId: hall.id })),
     });
+    hallIds.push(hall.id);
+  }
+  const createdMovies = [];
+
+  for (const movie of movies) {
+    const createdMovie = await db.movie.create({
+      data: {
+        movieName: movie.movieName,
+        releaseDate: movie.releaseDate,
+        duration: movie.duration,
+        genre: movie.genre,
+        imageUrl: movie.imageUrl,
+      },
+    });
+    createdMovies.push(createdMovie);
+  }
+
+  for (const movie of createdMovies) {
+    await db.hallMovie.createMany({
+      data: hallIds.map((hallId) => ({ hallId: hallId, movieId: movie.id })),
+    });
   }
 }
 
 AddHalls()
   .then(async () => {
+    console.log("🌱 db is seeded");
+
     await db.$disconnect();
   })
   .catch(async (e) => {
