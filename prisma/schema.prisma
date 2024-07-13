@@ -12,9 +12,9 @@ model Halls {
   hallName    String
   hallAddress hallAddress?
   capacity    Int
-  Movies      Movie[]
   Booking     Booking[]
   seats       Seat[]
+  hallMovie   hallMovie[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,11 +49,24 @@ model Movie {
   movieName   String
   duration    Int
   releaseDate DateTime
+  imageUrl    String
+  genre       String
+
+  Booking   Booking[]
+  hallMovie hallMovie[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model hallMovie {
+  id Int @id @default(autoincrement())
 
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
 
-  Booking Booking[]
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
