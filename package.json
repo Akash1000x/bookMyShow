@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:seed": "npx prisma db seed",
-    "db:migrate": "npx prisma migrate dev --skip-seed"
+    "db:migrate": "npx prisma migrate dev --skip-seed",
+    "db:reset": "npx prisma migrate reset --skip-seed"
   },
   "dependencies": {
     "@prisma/client": "^5.16.2",
@@ -19,6 +20,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.1.6",
     "lucide-react": "^0.400.0",
     "next": "14.2.4",
     "next-auth": "^4.24.7",
