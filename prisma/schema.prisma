@@ -109,12 +109,9 @@ model Booking {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  seatNumber Int
-  seatHallId Int
-  seat       Seat @relation(fields: [seatNumber, seatHallId], references: [seatNumber, hallId])
+  seatId Int  @unique
+  seat   Seat @relation(fields: [seatId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([seatNumber, seatHallId])
 }
