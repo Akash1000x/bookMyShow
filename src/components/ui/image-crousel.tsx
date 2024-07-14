@@ -13,25 +13,21 @@ export default function ImageCrousel() {
     { src: "https://assets-in.bmscdn.com/promotions/cms/creatives/1717080055549_playcardweb.jpg", alt: "image5" },
   ];
   return (
-    <Carousel className="w-full h-fit">
+    <Carousel className="w-full">
       <CarouselContent className="p-0">
         {Array.from({ length: 4 }).map((_, index) => (
           <CarouselItem key={index}>
-            <div className="">
-              <Card>
-                <CardContent className="flex aspect-auto items-center justify-center p-0">
-                  <span className="w-full">
-                    <Image
-                      src={images[index].src}
-                      alt={images[index].alt}
-                      width={500}
-                      height={300}
-                      style={{ width: "100%" }}
-                    />
-                  </span>
-                </CardContent>
-              </Card>
-            </div>
+            <Card>
+              <CardContent className="flex aspect-auto items-center justify-center p-0">
+                <Image
+                  src={images[index].src}
+                  alt={images[index].alt}
+                  width={500}
+                  height={300}
+                  style={{ width: "100%" }}
+                />
+              </CardContent>
+            </Card>
           </CarouselItem>
         ))}
       </CarouselContent>
