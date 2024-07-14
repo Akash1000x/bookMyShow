@@ -1,4 +1,4 @@
-import { getMovieHallWithSeat } from "@/actions/addNewUser";
+import { getMovieHallWithSeat } from "@/actions/action";
 import BookSeets from "@/components/Bookseets";
 import Container from "@/components/ui/container";
 import Wrapper from "@/components/ui/wrapper";

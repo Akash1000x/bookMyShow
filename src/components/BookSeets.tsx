@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import Box from "./ui/box";
 import { Hall } from "@/types";
 import { useSession } from "next-auth/react";
-import { bookseets, getMovieHallWithSeat } from "@/actions/addNewUser";
+import { bookseets, getMovieHallWithSeat } from "@/actions/action";
 
 export default function Bookseets({ hall, movieId }: { hall: Hall | null; movieId: string }) {
   const [selectedSeets, setSelectedSeets] = React.useState<number[]>([]);
