@@ -39,9 +39,10 @@ model Seat {
   hallId Int
   hall   Halls @relation(fields: [hallId], references: [id])
 
-  Booking Booking?
+  hallMovieId Int
+  hallMovie   hallMovie @relation(fields: [hallMovieId], references: [id])
 
-  @@unique([seatNumber, hallId])
+  Booking Booking[]
 }
 
 model Movie {
@@ -67,6 +68,8 @@ model hallMovie {
 
   movieId Int
   movie   Movie @relation(fields: [movieId], references: [id])
+
+  seats Seat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
