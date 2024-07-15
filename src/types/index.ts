@@ -22,6 +22,7 @@ export type Seats = {
   seatNumber: number;
   available: boolean;
   hallId: number;
+  hallMovieId: number;
 };
 
 export type Hall = {
@@ -30,4 +31,11 @@ export type Hall = {
   capacity: number;
   hallAddress?: HallAddress;
   seats?: Seats[];
+};
+
+export type HallMovie = {
+  id: number;
+  hallId: number;
+  movieId: number;
+  Seat?: Seats[];
 };
