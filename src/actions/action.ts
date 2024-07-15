@@ -1,29 +1,44 @@
 "use server";
 import prisma from "@/db";
 
-export const bookseets = async (hallId: number, movieId: number, userId: string, seatId: number[]) => {
+export const bookseets = async (
+  hallId: number,
+  movieId: number,
+  userId: string,
+  seatId: number[],
+  hallMovieId: number,
+) => {
   await prisma.$transaction([
     prisma.booking.createMany({
       data: seatId.map((id) => ({ hallId, movieId, userId, seatId: id })),
     }),
-    prisma.seat.updateMany({
+    prisma.hallMovie.update({
       where: {
-        id: {
-          in: seatId,
-        },
+        id: hallMovieId,
       },
       data: {
-        available: false,
+        Seat: {
+          updateMany: {
+            where: {
+              id: {
+                in: seatId,
+              },
+            },
+            data: {
+              available: false,
+            },
+          },
+        },
       },
     }),
   ]);
-  console.log("seet booked");
+  console.log("seet booked ✅");
 };
 
-export const getMovieHallWithSeat = async (id: number) => {
-  const hall = await prisma.halls.findUnique({
-    where: { id },
-    include: { seats: true },
+export const getMovieHallWithSeat = async (hallId: number, movieId: number) => {
+  const hall = await prisma.hallMovie.findFirst({
+    where: { hallId: hallId, movieId: movieId },
+    include: { Seat: true },
   });
   return hall;
 };
