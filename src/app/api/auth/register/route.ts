@@ -15,7 +15,7 @@ export const POST = async (req: Request) => {
         password: hashedPassword,
       },
     });
-    return NextResponse.redirect("/");
+    return NextResponse.json({ message: "User created successfully" }, { status: 200 });
   } catch (error: any) {
     console.error("Error creating user:", error);
     if (error.code === "P2002") {
