@@ -17,10 +17,6 @@ async function AddHalls() {
         hallId: hall.id,
       },
     });
-
-    await db.seat.createMany({
-      data: Array.from({ length: hallData.capacity }, (_, i) => ({ seatNumber: i + 1, hallId: hall.id })),
-    });
     hallIds.push(hall.id);
   }
   const createdMovies = [];
@@ -38,10 +34,20 @@ async function AddHalls() {
     createdMovies.push(createdMovie);
   }
 
-  for (const movie of createdMovies) {
-    await db.hallMovie.createMany({
-      data: hallIds.map((hallId) => ({ hallId: hallId, movieId: movie.id })),
-    });
+  for (let i = 0; i < createdMovies.length; i++) {
+    for (const hall of hallIds) {
+      const hallMovie = await db.hallMovie.create({
+        data: { hallId: hall, movieId: createdMovies[i].id },
+      });
+
+      await db.seat.createMany({
+        data: Array.from({ length: 100 }, (_, i) => ({
+          seatNumber: i + 1,
+          hallId: hall,
+          hallMovieId: hallMovie.id,
+        })),
+      });
+    }
   }
 }
 
