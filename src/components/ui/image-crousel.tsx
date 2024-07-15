@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Card, CardContent } from "./card";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./carousel";
 
 export default function ImageCrousel() {
@@ -13,28 +12,16 @@ export default function ImageCrousel() {
     { src: "https://assets-in.bmscdn.com/promotions/cms/creatives/1717080055549_playcardweb.jpg", alt: "image5" },
   ];
   return (
-    <div className="max-h-[300px]">
-      <Carousel className="w-full">
-        <CarouselContent className="p-0">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <CarouselItem key={index}>
-              <Card>
-                <CardContent className="flex aspect-auto items-center justify-center p-0">
-                  <Image
-                    src={images[index].src}
-                    alt={images[index].alt}
-                    width={500}
-                    height={300}
-                    style={{ width: "100%" }}
-                  />
-                </CardContent>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </div>
+    <Carousel className="relative" orientation="horizontal">
+      <CarouselContent className="md:max-h-[200px] lg:max-h-[250px]">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <CarouselItem key={index}>
+            <Image src={images[index].src} alt={images[index].alt} width={500} height={300} style={{ width: "100%" }} />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   );
 }
