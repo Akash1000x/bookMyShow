@@ -13,8 +13,8 @@ const Box = React.forwardRef<HTMLButtonElement, BoxProps>(({ className, ...props
       ref={ref}
       {...props}
       className={cn(
-        "border border-green-500 h-8 w-8 rounded disabled:bg-zinc-600 disabled:border-none disabled:text-white/50",
-        className
+        "h-8 w-8 rounded border border-green-500 disabled:border-none disabled:bg-zinc-600 disabled:text-white/50",
+        className,
       )}
     ></button>
   );

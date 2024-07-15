@@ -27,27 +27,27 @@ export default async function page({ params }: { params: { movie: string } }) {
 
   return (
     <Wrapper className="pt-10">
-      <Card className="w-full flex bg-blue-50 items-center rounded-none shadow-lg">
-        <CardContent className="p-0 rounded-none">
+      <Card className="flex w-full items-center rounded-none bg-blue-50 shadow-lg">
+        <CardContent className="rounded-none p-0">
           {movie?.imageUrl && (
             <Image src={movie?.imageUrl} height={200} width={150} alt={movie?.movieName} className="" />
           )}
         </CardContent>
         <CardFooter className="block px-2 pl-10">
-          <h2 className="font-bold text-4xl">{movie?.movieName}</h2>
+          <h2 className="text-4xl font-bold">{movie?.movieName}</h2>
           <div>
-            <p className="opacity-80 text-xl pl-1">{movie?.genre}</p>
+            <p className="pl-1 text-xl opacity-80">{movie?.genre}</p>
           </div>
         </CardFooter>
       </Card>
       <div>
-        <h1 className="text-2xl font-semibold mb-8 mt-16">Halls in which the movie streaming:</h1>
-        <div className="space-y-5 ">
+        <h1 className="mb-8 mt-16 text-2xl font-semibold">Halls in which the movie streaming:</h1>
+        <div className="space-y-5">
           {halls.map((hall, i) => (
-            <Card key={i} className="p-4 border-none bg-pink-100/70 flex justify-between items-center">
-              <CardContent className="p-0 rounded-none">
+            <Card key={i} className="flex items-center justify-between border-none bg-pink-100/70 p-4">
+              <CardContent className="rounded-none p-0">
                 <div className="text-2xl font-semibold">{hall?.hallName && <h1>{hall.hallName} Cinema Hall</h1>}</div>
-                <CardFooter className="block pl-1 pb-0 pt-1">
+                <CardFooter className="block pb-0 pl-1 pt-1">
                   <div className="space-x-1">
                     <strong className="font-medium">Address:</strong>
                     <span>{hall?.hallAddress?.street},</span>

@@ -21,12 +21,12 @@ export default async function NavBar() {
             <Image src={logo} alt="bookMyShow" width={120} />
           </Link>
           <div className="relative flex-auto">
-            <Search className="opacity-40 absolute left-2 top-2" width={20} />
+            <Search className="absolute left-2 top-2 opacity-40" width={20} />
             <Input className="pl-9" placeholder="Search for Movies, Events, Plays, Sports and Activities" />
           </div>
-          <div className=" text-white flex-1 flex justify-end">
+          <div className="flex flex-1 justify-end text-white">
             {!!session ? (
-              <div className="bg-gray-900 uppercase h-10 w-10 rounded-full flex justify-center items-center text-xl font-bold">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-xl font-bold uppercase">
                 {session.user.name[0]}
               </div>
             ) : (
