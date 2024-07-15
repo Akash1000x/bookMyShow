@@ -6,6 +6,7 @@ import Image from "next/image";
 import prisma from "@/db";
 import { Movie } from "@/types";
 import Link from "next/link";
+import Container from "@/components/ui/container";
 
 const getAllMovies = async () => {
   const movies: Movie[] = await prisma.movie.findMany();
@@ -18,24 +19,26 @@ export default async function Page() {
     <div>
       <ImageCrousel />
       <Wrapper className="mt-8">
-        <h1 className="mb-4 text-4xl font-semibold">Movies</h1>
-        <div className="flex justify-between gap-8">
-          {movies.map((movie, i) => (
-            <Link href={`movies/${movie.id}`} key={i}>
-              <Card className="w-fit border-none p-0">
-                <CardContent className="rounded-none p-0">
-                  <Image src={movie.imageUrl} height={200} width={250} alt={movie.movieName} className="rounded-lg" />
-                </CardContent>
-                <CardFooter className="block px-2 pt-1">
-                  <h2 className="text-lg font-medium">{movie.movieName}</h2>
-                  <div>
-                    <p className="text-sm opacity-90">{movie.genre}</p>
-                  </div>
-                </CardFooter>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <Container>
+          <h1 className="mb-4 text-4xl font-semibold">Movies</h1>
+          <div className="flex flex-wrap justify-between gap-8">
+            {movies.map((movie, i) => (
+              <Link href={`movies/${movie.id}`} key={i}>
+                <Card className="w-fit border-none p-0">
+                  <CardContent className="rounded-none p-0">
+                    <Image src={movie.imageUrl} height={200} width={250} alt={movie.movieName} className="rounded-lg" />
+                  </CardContent>
+                  <CardFooter className="block px-2 pt-1">
+                    <h2 className="text-lg font-medium">{movie.movieName}</h2>
+                    <div>
+                      <p className="text-sm opacity-90">{movie.genre}</p>
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </Container>
       </Wrapper>
     </div>
   );
