@@ -1,18 +1,17 @@
 import { getMovieHallWithSeat } from "@/actions/action";
-import BookSeets from "@/components/Bookseets";
+import BookSeats from "@/components/BookSeats";
 import Container from "@/components/ui/container";
 import Wrapper from "@/components/ui/wrapper";
-import prisma from "@/db";
-import { Hall } from "@/types";
+import { HallMovie } from "@/types";
 import React from "react";
 
 export default async function Page({ params }: { params: { hall: string[] } }) {
-  const hall: Hall | null = await getMovieHallWithSeat(Number(params.hall[1]));
+  const hall: HallMovie | null = await getMovieHallWithSeat(Number(params.hall[1]), Number(params.hall[2]));
 
   return (
     <Wrapper>
       <Container>
-        <BookSeets hall={hall} movieId={params.hall[2]} />
+        <BookSeats hall={hall} movieId={params.hall[2]} />
       </Container>
     </Wrapper>
   );
