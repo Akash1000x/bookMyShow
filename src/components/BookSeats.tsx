@@ -28,7 +28,9 @@ export default function Bookseets({ hall, movieId }: { hall: HallMovie | null; m
 
   return (
     <div>
-      <Button onClick={() => setOpenDialog(!openDialog)}>open dialog</Button>
+      <div className="mx-auto w-fit pb-8 pt-4">
+        <h1 className="text-5xl font-bold">{hallData?.movie?.movieName}</h1>
+      </div>
       <div>
         {hallData &&
           hallData.Seat &&
@@ -60,7 +62,8 @@ export default function Bookseets({ hall, movieId }: { hall: HallMovie | null; m
       >
         book seet
       </Button>
-      <TicketConfirm open={openDialog} setOpen={() => setOpenDialog(!openDialog)} />
+      <Button onClick={() => setOpenDialog(!openDialog)}>open dialog</Button>
+      <TicketConfirm hallData={hallData} open={openDialog} setOpen={() => setOpenDialog(!openDialog)} />
     </div>
   );
 }
