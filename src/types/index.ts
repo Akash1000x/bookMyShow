@@ -38,4 +38,6 @@ export type HallMovie = {
   hallId: number;
   movieId: number;
   Seat?: Seats[];
+  movie?: Movie;
+  hall?: Hall;
 };
