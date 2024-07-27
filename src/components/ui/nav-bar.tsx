@@ -7,6 +7,7 @@ import { Search } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/auth";
 import { signIn } from "next-auth/react";
+import { ThemeToggle } from "./theme-toggle";
 
 export default async function NavBar() {
   const session = await getServerSession(authOption);
@@ -32,6 +33,9 @@ export default async function NavBar() {
             ) : (
               <button onClick={() => signIn()}>LogIn</button>
             )}
+          </div>
+          <div className="pl-4">
+            <ThemeToggle />
           </div>
         </nav>
       </Wrapper>
