@@ -71,6 +71,8 @@ model hallMovie {
 
   seats Seat[]
 
+  startTime DateTime
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
