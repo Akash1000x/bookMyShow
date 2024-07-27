@@ -37,7 +37,7 @@ async function AddHalls() {
   for (let i = 0; i < createdMovies.length; i++) {
     for (const hall of hallIds) {
       const hallMovie = await db.hallMovie.create({
-        data: { hallId: hall, movieId: createdMovies[i].id },
+        data: { hallId: hall, movieId: createdMovies[i].id, startTime: new Date(2024, 7, 28, 15, 30, 0, 0) },
       });
 
       await db.seat.createMany({
