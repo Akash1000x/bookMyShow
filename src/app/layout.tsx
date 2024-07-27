@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import Providers from "@/Providers";
 import NavBar from "@/components/ui/nav-bar";
 import Link from "next/link";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import Footer from "@/components/ui/Footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,16 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
-        <Providers>
-          <NavBar />
-          <div className="min-h-[calc(100vh-272px)]">{children}</div>
-          <footer className="mt-20 flex h-[200px] w-full items-center justify-center bg-black text-4xl font-bold text-white">
-            Developed by
-            <Link href="https://akashkumawat.vercel.app" className="pl-4 text-blue-400 hover:underline">
-              Akash Kumawat
-            </Link>
-          </footer>
-        </Providers>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Providers>
+            <div className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
+              <NavBar />
+              <div>{children}</div>
+              <Footer />
+            </div>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
