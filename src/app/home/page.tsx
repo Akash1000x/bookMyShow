@@ -24,7 +24,7 @@ export default async function Page() {
           <div className="flex flex-wrap justify-between gap-8">
             {movies.map((movie, i) => (
               <Link href={`movies/${movie.id}`} key={i}>
-                <Card className="w-fit border-none p-0">
+                <Card className="w-fit border-none p-0 shadow-2xl dark:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.325)]">
                   <CardContent className="rounded-none p-0">
                     <Image src={movie.imageUrl} height={200} width={250} alt={movie.movieName} className="rounded-lg" />
                   </CardContent>
