@@ -17,7 +17,7 @@ export const bookseets = async (
         id: hallMovieId,
       },
       data: {
-        Seat: {
+        seats: {
           updateMany: {
             where: {
               id: {
@@ -38,7 +38,7 @@ export const bookseets = async (
 export const getMovieHallWithSeat = async (hallId: number, movieId: number) => {
   const hall = await prisma.hallMovie.findFirst({
     where: { hallId: hallId, movieId: movieId },
-    include: { Seat: true, movie: true, hall: { include: { hallAddress: true } } },
+    include: { seats: true, movie: true, hall: { include: { hallAddress: true } } },
   });
   return hall;
 };
