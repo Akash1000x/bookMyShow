@@ -5,13 +5,20 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Inputs = {
   phoneNumber: string;
   password: string;
 };
 
-export default function SignIn() {
+type Props = {
+  className?: string;
+  callbackUrl?: string;
+  error?: string;
+};
+
+export default function SignIn(props: Props) {
   const router = useRouter();
   const {
     register,
@@ -29,8 +36,8 @@ export default function SignIn() {
       });
       if (res?.ok) {
         router.push("/home");
-      } else if (!res?.ok) {
-        setError("password", { message: "Invalid phone number or password" });
+      } else if (!res?.error) {
+        router.push(props.callbackUrl ?? "http://localhost:3000");
       }
     } catch (error) {
       console.error(error);
@@ -71,6 +78,12 @@ export default function SignIn() {
           Sign In
         </Button>
       </form>
+      <p className="mt-4 text-center">
+        Don&apos;t have an account?{" "}
+        <Link href="/signup" className="text-blue-600">
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
 }

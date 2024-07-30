@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Label } from "../ui/label";
+import Link from "next/link";
 type Inputs = {
   firstName: string;
   lastName: string;
@@ -95,6 +96,12 @@ export default function SignUp() {
           Submit
         </Button>
       </form>
+      <p className="mt-4 text-center">
+        Already have an account?{" "}
+        <Link href="/signin" className="text-blue-600">
+          Sign In
+        </Link>
+      </p>
     </div>
   );
 }
