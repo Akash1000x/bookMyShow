@@ -4,15 +4,22 @@ import bcrypt from "bcrypt";
 
 export const POST = async (req: Request) => {
   try {
-    const { firstName, phone, password } = await req.json();
-    console.log(firstName, phone, password);
+    const { firstName, lastName, phoneNumber, password, Address, email } = await req.json();
+    console.log(firstName, lastName, phoneNumber, password, Address, email);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await prisma.user.create({
       data: {
         firstName,
-        phoneNumber: phone,
+        lastName,
+        email,
+        phoneNumber,
         password: hashedPassword,
+        Address: {
+          create: {
+            street: Address,
+          },
+        },
       },
     });
     return NextResponse.json({ message: "User created successfully" }, { status: 200 });
